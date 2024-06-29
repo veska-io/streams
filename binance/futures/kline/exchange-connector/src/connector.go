@@ -83,6 +83,10 @@ func (c *Connector) Run() {
 				TradeNum:                 k.TradeNum,
 				TakerBuyBaseAssetVolume:  k.TakerBuyBaseAssetVolume,
 				TakerBuyQuoteAssetVolume: k.TakerBuyQuoteAssetVolume,
+
+				Symbol: response.Task.Market,
+				Base:   response.Task.Market[:len(response.Task.Market)-4],
+				Quot:   response.Task.Market[len(response.Task.Market)-4:],
 			}
 
 			msg, err := proto.Marshal(kline)

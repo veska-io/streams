@@ -41,6 +41,8 @@ type ResponseMessage struct {
 
 type Task struct {
 	Market string
+	Base   string
+	Quot   string
 	Start  time.Time
 	End    time.Time
 }
