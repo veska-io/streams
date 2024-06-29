@@ -9,6 +9,7 @@ require (
 	cloud.google.com/go/compute/metadata v0.3.0 // indirect
 	cloud.google.com/go/iam v1.1.8 // indirect
 	cloud.google.com/go/pubsub v1.40.0 // indirect
+	github.com/GoogleCloudPlatform/functions-framework-go v1.8.1 // indirect
 	github.com/adshao/go-binance/v2 v2.5.1 // indirect
 	github.com/bitly/go-simplejson v0.5.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
