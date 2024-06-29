@@ -103,6 +103,8 @@ github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO
 github.com/stretchr/testify v1.8.1/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
 github.com/veska-io/streams-connectors/consumers/rest v0.0.1 h1:GoSG0m9wp7VjeOM46iGFn4BC2M7Gah/pi/iN0ucD0x8=
 github.com/veska-io/streams-connectors/consumers/rest v0.0.1/go.mod h1:moHwUswYi5tJJ8afpjXiSVuPRfUvTlSh6Ec54NKOyRE=
+github.com/veska-io/streams-connectors/consumers/rest v0.0.2 h1:QepduTBsfgmgaF3maoBR1cLDdxQQ6//GlapnBiInEYc=
+github.com/veska-io/streams-connectors/consumers/rest v0.0.2/go.mod h1:moHwUswYi5tJJ8afpjXiSVuPRfUvTlSh6Ec54NKOyRE=
 github.com/veska-io/streams-connectors/producers/pub-sub v0.0.1 h1:D+cJYAxNvWrYkCjZvF7c/KxJF0V+V9bKAhFdw4bQl6c=
 github.com/veska-io/streams-connectors/producers/pub-sub v0.0.1/go.mod h1:PJsXsIbZbXqA9DPehr6KpQoE7fYU99ExMt+PkCObYSs=
 github.com/veska-io/streams-proto v0.0.6 h1:I/s8jfzQzjtTbL+Nd7PaXphC4iQUoVigUWBDkcMK97Y=
