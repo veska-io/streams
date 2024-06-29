@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/adshao/go-binance/v2"
-	restc "github.com/veska-io/connector/consumers/rest"
+	restc "github.com/veska-io/streams-connectors/consumers/rest"
 )
 
 type Consumer struct {
