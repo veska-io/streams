@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/adshao/go-binance/v2/futures"
-	binancepb "github.com/veska-io/streams-proto/gen/go/streams/binance"
-	"github.com/veska-io/streams/src/binance/futures/kline/outer_connector/consumer"
+	"github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/src/consumer"
+	binancepb "github.com/veska-io/streams-proto/gen/go/streams/binance/futures"
 )
 
 func TestConsumer(t *testing.T) {

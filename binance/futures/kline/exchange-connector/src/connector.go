@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/adshao/go-binance/v2/futures"
-	"github.com/veska-io/connector/producers/pub_sub"
-	binancepb "github.com/veska-io/streams-proto/gen/go/streams/binance"
-	"github.com/veska-io/streams/src/binance/futures/kline/outer_connector/consumer"
+	"github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/src/consumer"
+	"github.com/veska-io/streams-connectors/producers/pub-sub"
+	binancepb "github.com/veska-io/streams-proto/gen/go/streams/binance/futures"
 	"google.golang.org/protobuf/proto"
 )
 

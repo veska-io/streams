@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/adshao/go-binance/v2"
-	connector "github.com/veska-io/streams/src/binance/futures/kline/outer_connector"
-	"github.com/veska-io/streams/src/binance/futures/kline/outer_connector/config"
-	"github.com/veska-io/streams/src/binance/futures/kline/outer_connector/logger"
+	connector "github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/src"
+	"github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/src/config"
+	"github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/src/logger"
 )
 
 func main() {
