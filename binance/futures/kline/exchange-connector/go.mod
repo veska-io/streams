@@ -12,7 +12,7 @@ require (
 	github.com/knadh/koanf/providers/file v0.1.0
 	github.com/knadh/koanf/v2 v2.1.1
 	github.com/veska-io/streams-connectors/producers/pub-sub v0.0.1
-	github.com/veska-io/streams-proto v0.0.6
+	github.com/veska-io/streams-proto v0.0.9
 	google.golang.org/protobuf v1.34.2
 )
 

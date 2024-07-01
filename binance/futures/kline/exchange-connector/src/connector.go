@@ -7,7 +7,7 @@ import (
 
 	"github.com/adshao/go-binance/v2/futures"
 	"github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/src/consumer"
-	"github.com/veska-io/streams-connectors/producers/pub-sub"
+	pub_sub "github.com/veska-io/streams-connectors/producers/pub-sub"
 	binancepb "github.com/veska-io/streams-proto/gen/go/streams/binance/futures"
 	"google.golang.org/protobuf/proto"
 )
@@ -72,17 +72,17 @@ func (c *Connector) Run() {
 		}
 		for _, k := range klinesResponse {
 			kline := &binancepb.Kline{
-				OpenTime:                 k.OpenTime,
-				Open:                     k.Open,
-				High:                     k.High,
-				Low:                      k.Low,
-				Close:                    k.Close,
-				Volume:                   k.Volume,
-				CloseTime:                k.CloseTime,
-				QuoteAssetVolume:         k.QuoteAssetVolume,
-				TradeNum:                 k.TradeNum,
-				TakerBuyBaseAssetVolume:  k.TakerBuyBaseAssetVolume,
-				TakerBuyQuoteAssetVolume: k.TakerBuyQuoteAssetVolume,
+				OpenTime:                k.OpenTime,
+				Open:                    k.Open,
+				High:                    k.High,
+				Low:                     k.Low,
+				Close:                   k.Close,
+				Volume:                  k.Volume,
+				CloseTime:               k.CloseTime,
+				QuotAssetVolume:         k.QuoteAssetVolume,
+				TradeNum:                k.TradeNum,
+				TakerBuyBaseAssetVolume: k.TakerBuyBaseAssetVolume,
+				TakerBuyQuotAssetVolume: k.TakerBuyQuoteAssetVolume,
 
 				Symbol: response.Task.Market,
 				Base:   response.Task.Market[:len(response.Task.Market)-4],
