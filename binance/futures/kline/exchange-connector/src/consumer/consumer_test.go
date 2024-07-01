@@ -39,19 +39,19 @@ func TestConsumer(t *testing.T) {
 		klines := msg.Data.([]*futures.Kline)
 		for _, k := range klines {
 			kline := binancepb.Kline{
-				OpenTime:                k.OpenTime,
-				Open:                    k.Open,
-				High:                    k.High,
-				Low:                     k.Low,
-				Close:                   k.Close,
-				Volume:                  k.Volume,
-				CloseTime:               k.CloseTime,
-				QuotAssetVolume:         k.QuoteAssetVolume,
-				TradeNum:                k.TradeNum,
-				TakerBuyBaseAssetVolume: k.TakerBuyBaseAssetVolume,
-				TakerBuyQuotAssetVolume: k.TakerBuyQuoteAssetVolume,
+				OpenTime: k.OpenTime,
+				// Open:                    k.Open,
+				// High:                    k.High,
+				// Low:                     k.Low,
+				// Close:                   k.Close,
+				// Volume:                  k.Volume,
+				// CloseTime:               k.CloseTime,
+				// QuotAssetVolume:         k.QuoteAssetVolume,
+				// TradeNum:                k.TradeNum,
+				// TakerBuyBaseAssetVolume: k.TakerBuyBaseAssetVolume,
+				// TakerBuyQuotAssetVolume: k.TakerBuyQuoteAssetVolume,
 			}
-			t.Log(kline)
+			t.Log(kline.OpenTime)
 		}
 	}
 }
