@@ -36,23 +36,28 @@ func ApiCall(task restc.Task) (*restc.ResponseMessage, error) {
 		fmt.Println(err)
 	}
 
-	dirty_start_datetime := time.UnixMilli(klines[0].OpenTime).UTC()
-	start_datetime := time.Date(
-		dirty_start_datetime.Year(),
-		dirty_start_datetime.Month(),
-		dirty_start_datetime.Day(),
-		dirty_start_datetime.Hour(),
-		0, 0, 0, time.UTC,
-	)
+	start_datetime := task.Start
+	end_datetime := task.End
 
-	dirty_end_datetime := time.UnixMilli(klines[len(klines)-1].OpenTime).UTC()
-	end_datetime := time.Date(
-		dirty_end_datetime.Year(),
-		dirty_end_datetime.Month(),
-		dirty_end_datetime.Day(),
-		dirty_end_datetime.Hour(),
-		0, 0, 0, time.UTC,
-	)
+	if len(klines) > 0 {
+		dirty_start_datetime := time.UnixMilli(klines[0].OpenTime).UTC()
+		start_datetime = time.Date(
+			dirty_start_datetime.Year(),
+			dirty_start_datetime.Month(),
+			dirty_start_datetime.Day(),
+			dirty_start_datetime.Hour(),
+			0, 0, 0, time.UTC,
+		)
+
+		dirty_end_datetime := time.UnixMilli(klines[len(klines)-1].OpenTime).UTC()
+		end_datetime = time.Date(
+			dirty_end_datetime.Year(),
+			dirty_end_datetime.Month(),
+			dirty_end_datetime.Day(),
+			dirty_end_datetime.Hour(),
+			0, 0, 0, time.UTC,
+		)
+	}
 
 	msg := restc.ResponseMessage{
 		Task:  task,
