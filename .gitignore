@@ -48,4 +48,3 @@ gha-creds-*.json
 .DS_Store
 
 config.yml
-main

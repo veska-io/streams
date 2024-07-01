@@ -3,7 +3,6 @@ package config
 import (
 	"flag"
 	"fmt"
-	"time"
 
 	"github.com/knadh/koanf/parsers/yaml"
 	"github.com/knadh/koanf/providers/confmap"
@@ -13,23 +12,32 @@ import (
 )
 
 const (
-	DEFAULT_DEBUG      = false
-	TASK_QUANT_SECONDS = 60 * 60 * 24 * 400
-	RPS                = 7
+	DEFAULT_DEBUG = false
+
+	DEFAULT_PUBSUB_IDLE_TIMEOUT_SECONDS     = 10
+	DEFAULT_PUBSUB_MAX_OUTSTANDING_MESSAGES = 100000
+
+	DEFAULT_CLICKHOUSE_DB                     = "default"
+	DEFAULT_CLICKHOUSE_USER                   = "default"
+	DEFAULT_CLICKHOUSE_WRITE_INTERVAL_SECONDS = 3
 )
 
 type Config struct {
 	Debug bool `koanf:"CONNECTOR_DEBUG"`
 
-	Markets []string  `koanf:"CONNECTOR_MARKETS"`
-	Start   time.Time `koanf:"CONNECTOR_START"`
-	End     time.Time `koanf:"CONNECTOR_END"`
-
-	Rps              uint8  `koanf:"CONNECTOR_RPS"`
-	TaskQuantSeconds uint32 `koanf:"CONNECTOR_TASK_QUANT_SECONDS"`
-
 	PubSubProjectId string `koanf:"CONNECTOR_PUBSUB_PROJECT_ID"`
 	PubSubTopic     string `koanf:"CONNECTOR_PUBSUB_TOPIC"`
+	SubscriptionId  string `koanf:"CONNECTOR_PUBSUB_SUBSCRIPTION_ID"`
+
+	IdleTimeoutSeconds     uint8 `koanf:"CONNECTOR_PUBSUB_IDLE_TIMEOUT_SECONDS"`
+	MaxOutstandingMessages int   `koanf:"CONNECTOR_PUBSUB_MAX_OUTSTANDING_MESSAGES"`
+
+	Host                 string `koanf:"CONNECTOR_CLICKHOUSE_HOST"`
+	Database             string `koanf:"CONNECTOR_CLICKHOUSE_DB"`
+	User                 string `koanf:"CONNECTOR_CLICKHOUSE_USER"`
+	Password             string `koanf:"CONNECTOR_CLICKHOUSE_PASSWORD"`
+	Table                string `koanf:"CONNECTOR_CLICKHOUSE_TABLE"`
+	WriteIntervalSeconds uint8  `koanf:"CONNECTOR_CLICKHOUSE_WRITE_INTERVAL_SECONDS"`
 }
 
 func MustNew() *Config {
@@ -57,19 +65,15 @@ func MustNew() *Config {
 }
 
 func mustLoadDefaults(k *koanf.Koanf) {
-	now := time.Now().UTC()
-
-	end := time.Date(now.Year(), now.Month(), now.Day(), now.Hour(), 0, 0, 0, time.UTC)
-	start := end.Add(-1 * time.Duration(time.Hour))
-
 	err := k.Load(confmap.Provider(map[string]interface{}{
 		"CONNECTOR_DEBUG": DEFAULT_DEBUG,
 
-		"CONNECTOR_START": start,
-		"CONNECTOR_END":   end,
+		"CONNECTOR_PUBSUB_IDLE_TIMEOUT_SECONDS":     DEFAULT_PUBSUB_IDLE_TIMEOUT_SECONDS,
+		"CONNECTOR_PUBSUB_MAX_OUTSTANDING_MESSAGES": DEFAULT_PUBSUB_MAX_OUTSTANDING_MESSAGES,
 
-		"CONNECTOR_RPS":                RPS,
-		"CONNECTOR_TASK_QUANT_SECONDS": TASK_QUANT_SECONDS,
+		"CONNECTOR_CLICKHOUSE_DB":                     DEFAULT_CLICKHOUSE_DB,
+		"CONNECTOR_CLICKHOUSE_USER":                   DEFAULT_CLICKHOUSE_USER,
+		"CONNECTOR_CLICKHOUSE_WRITE_INTERVAL_SECONDS": DEFAULT_CLICKHOUSE_WRITE_INTERVAL_SECONDS,
 	}, "."), nil)
 	if err != nil {
 		panic(fmt.Errorf("error while loading config defaults: %w", err))

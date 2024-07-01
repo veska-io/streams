@@ -1,4 +1,4 @@
-module github.com/veska-io/streams-connectors/producers/clikhouse
+module github.com/veska-io/streams-connectors/producers/clickhouse
 
 go 1.22
 
