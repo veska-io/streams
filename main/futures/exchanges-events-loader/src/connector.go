@@ -4,13 +4,12 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
-	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
 
 	pubsub "cloud.google.com/go/pubsub"
-	pub_sub "github.com/veska-io/streams-connectors/consumers/pub_sub"
+	pub_sub "github.com/veska-io/streams-connectors/consumers/pub-sub"
 	chprd "github.com/veska-io/streams-connectors/producers/clickhouse"
 	eeventspb "github.com/veska-io/streams-proto/gen/go/streams/main/futures"
 	"google.golang.org/protobuf/proto"
@@ -98,28 +97,49 @@ func (c *Connector) Run() {
 		c.lastMessageTimestamp.Store(time.Now().UnixNano())
 		c.logger.Debug("received message", slog.String("id", msg.ID))
 
-		trade := &eeventspb.Event{}
-		if err := proto.Unmarshal(msg.Data, trade); err != nil {
+		event := &eeventspb.Event{}
+		if err := proto.Unmarshal(msg.Data, event); err != nil {
 			c.logger.Error("failed to unmarshal trade message", slog.String("err", err.Error()))
 			continue
 		}
 
-		chTrade := pstreams.Trade{
-			TradeTimestamp:  trade.GetTimestamp(),
-			CreatedAtHeight: trade.GetCreatedAtHeight(),
-			TradeId:         trade.GetId(),
-			Exchange:        trade.GetExchange(),
-			Market:          strings.ToLower(trade.GetMarket()),
-			Base:            strings.Split(strings.ToLower(trade.GetMarket()), `-`)[0],
-			Quot:            strings.Split(strings.ToLower(trade.GetMarket()), `-`)[1],
-			Side:            trade.GetSide(),
-			Size:            trade.GetSize(),
-			Price:           trade.GetPrice(),
-			TradeType:       trade.GetType(),
+		data := []any{
+			event.GetEvent(),
+			event.GetEventTimestamp(),
+
+			event.GetExchange(),
+			event.GetMarket(),
+			event.GetBase(),
+			event.GetQuot(),
+
+			event.GetPriceOpen(),
+			event.GetPriceClose(),
+			event.GetPriceHigh(),
+			event.GetPriceLow(),
+
+			event.GetVolumeBase(),
+			event.GetVolumeQuot(),
+			event.GetVolumeBaseBuyTaker(),
+			event.GetVolumeQuotBuyTaker(),
+			event.GetVolumeBaseSellTaker(),
+			event.GetVolumeQuotSellTaker(),
+
+			event.GetOiOpen(),
+
+			event.GetTradesCount(),
+
+			event.GetLiquidationsShortsCount(),
+			event.GetLiquidationsLongsCount(),
+			event.GetLiquidationsShortsBaseVolume(),
+			event.GetLiquidationsLongsBaseVolume(),
+			event.GetLiquidationsShortsQuotVolume(),
+			event.GetLiquidationsLongsQuotVolume(),
+
+			event.GetFundingRate(),
 		}
 
 		c.producer.DataStream <- chprd.Message{
-			Data: chTrade.ToSlice(),
+			Data: data,
 			Meta: msg,
 		}
 	}
