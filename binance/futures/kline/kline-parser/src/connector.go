@@ -1,4 +1,4 @@
-package connector
+package parser
 
 import (
 	"context"
@@ -54,25 +54,14 @@ func (c *Connector) Run() {
 	go c.producer.Run()
 
 	for kline := range c.consumer.ResponseChannel {
-		priceEvent, err := parsePriceEvent(kline)
+
+		events, err := ParseKline(kline)
 		if err != nil {
-			c.logger.Error("failed to parse price event", slog.String("err", err.Error()))
+			c.logger.Error("unable to parse the kline", slog.String("error", err.Error()))
 			continue
 		}
 
-		volumeEvent, err := parseVolumeEvent(kline)
-		if err != nil {
-			c.logger.Error("failed to parse volume event", slog.String("err", err.Error()))
-			continue
-		}
-
-		tradesEvent, err := parseTradesEvent(kline)
-		if err != nil {
-			c.logger.Error("failed to parse trades event", slog.String("err", err.Error()))
-			continue
-		}
-
-		for _, event := range [3]*eeventspb.Event{priceEvent, volumeEvent, tradesEvent} {
+		for _, event := range events {
 			msg, err := proto.Marshal(event)
 			if err != nil {
 				c.logger.Error("failed to marshal event", slog.String("err", err.Error()))
@@ -87,6 +76,25 @@ func (c *Connector) Run() {
 	}
 
 	close(c.producer.DataStream)
+}
+
+func ParseKline(kline *binancepb.Kline) ([]*eeventspb.Event, error) {
+	priceEvent, err := parsePriceEvent(kline)
+	if err != nil {
+		return nil, fmt.Errorf("parsing priceEvent: %w", err)
+	}
+
+	volumeEvent, err := parseVolumeEvent(kline)
+	if err != nil {
+		return nil, fmt.Errorf("parsing volumeEvent: %w", err)
+	}
+
+	tradesEvent, err := parseTradesEvent(kline)
+	if err != nil {
+		return nil, fmt.Errorf("parsing tradesEvent: %w", err)
+	}
+
+	return []*eeventspb.Event{priceEvent, volumeEvent, tradesEvent}, nil
 }
 
 func parsePriceEvent(kline *binancepb.Kline) (*eeventspb.Event, error) {

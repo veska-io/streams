@@ -7,7 +7,7 @@ import (
 
 	"github.com/cloudevents/sdk-go/v2/event"
 	"github.com/veska-io/streams-connectors/binance/futures/kline/kline-parser/config"
-	connector "github.com/veska-io/streams-connectors/binance/futures/kline/kline-parser/src"
+	parser "github.com/veska-io/streams-connectors/binance/futures/kline/kline-parser/src"
 	"github.com/veska-io/streams-connectors/binance/futures/kline/kline-parser/src/logger"
 )
 
@@ -17,7 +17,7 @@ func MustRun(ctx context.Context, e event.Event) {
 
 	logger.Info("starting conector")
 
-	connector, err := connector.New(ctx, logger,
+	connector, err := parser.New(ctx, logger,
 		cfg.PubSubProjectId,
 		cfg.PubSubTopic,
 		e,
