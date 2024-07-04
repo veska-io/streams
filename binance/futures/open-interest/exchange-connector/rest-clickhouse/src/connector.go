@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/adshao/go-binance/v2/futures"
-	"github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/rest-pubsub/src/consumer"
+	"github.com/veska-io/streams-connectors/binance/futures/open-interest/exchange-connector/rest-pubsub/src/consumer"
 	chprd "github.com/veska-io/streams-connectors/producers/clickhouse"
 )
 
@@ -64,40 +64,30 @@ func (c *Connector) Run() {
 			c.logger.Info("precent completed", slog.Uint64("status", uint64(c.consumer.Status())))
 		}
 
-		klinesResponse, ok := response.Data.([]*futures.Kline)
+		oiResponse, ok := response.Data.(*futures.OpenInterest)
 		if !ok {
-			c.logger.Error("failed to cast response data to TradesResponse")
+			c.logger.Error("failed to cast response data to OpenInterest")
 			continue
 		}
-		for _, k := range klinesResponse {
 
-			data := []any{
-				response.Task.Market,
-				response.Task.Market[:len(response.Task.Market)-4],
-				response.Task.Market[len(response.Task.Market)-4:],
+		if oiResponse == nil {
+			c.logger.Warn("Empty OpenInterest")
+			continue
+		}
 
-				time.UnixMilli(k.OpenTime).Truncate(time.Hour).UnixMilli(),
-				uint64(k.OpenTime),
-				uint64(k.CloseTime),
+		data := []any{
+			response.Task.Market,
+			response.Task.Market[:len(response.Task.Market)-4],
+			response.Task.Market[len(response.Task.Market)-4:],
 
-				k.Open,
-				k.High,
-				k.Low,
-				k.Close,
-				k.Volume,
+			uint64(oiResponse.Time),
+			oiResponse.OpenInterest,
 
-				uint64(k.TradeNum),
+			time.Now().UnixMilli(),
+		}
 
-				k.QuoteAssetVolume,
-				k.TakerBuyBaseAssetVolume,
-				k.TakerBuyQuoteAssetVolume,
-
-				time.Now().UnixMilli(),
-			}
-
-			c.producer.DataStream <- chprd.Message{
-				Data: data,
-			}
+		c.producer.DataStream <- chprd.Message{
+			Data: data,
 		}
 
 		statusCounter += 1
