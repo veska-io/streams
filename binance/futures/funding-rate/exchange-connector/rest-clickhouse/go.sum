@@ -93,12 +93,14 @@ github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
 github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/tidwall/pretty v1.0.0/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
-github.com/veska-io/streams-connectors/binance/futures/open-interest/exchange-connector/rest-pubsub v0.0.0-20240704133358-794b7f204f4a h1:Kt8FxuBxmIgiyyCJ20IEsclve4vNqYBKZejfJQDl/AU=
-github.com/veska-io/streams-connectors/binance/futures/open-interest/exchange-connector/rest-pubsub v0.0.0-20240704133358-794b7f204f4a/go.mod h1:fx/7bmbnm7ZpjsMS+tvB/R+O7zYpMGvMJeKxoNfJQOs=
+github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector v0.0.6 h1:yD9iUGqhBQdO+XCqB81910w+vhAcznZpeHj87W+8LAs=
+github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector v0.0.6/go.mod h1:O7JmqyZFgfTdCm6TKesCRczK3ClK2yDcOJKEO51r81E=
 github.com/veska-io/streams-connectors/consumers/rest v0.0.2 h1:QepduTBsfgmgaF3maoBR1cLDdxQQ6//GlapnBiInEYc=
 github.com/veska-io/streams-connectors/consumers/rest v0.0.2/go.mod h1:moHwUswYi5tJJ8afpjXiSVuPRfUvTlSh6Ec54NKOyRE=
 github.com/veska-io/streams-connectors/producers/clickhouse v0.0.2 h1:PP6a3zHyIY/PfESvnDV6DQdKvlE5fGiY5wrqjkTXiTs=
 github.com/veska-io/streams-connectors/producers/clickhouse v0.0.2/go.mod h1:3SCvn+lPW9H1qUzACnmGRSn4zlpRYxE4ytFTwHbT228=
+github.com/veska-io/streams-proto v0.0.9 h1:NYboOtpSIqKg9WRIIwGxVuiR2FY99AG+vL4BYXXL360=
+github.com/veska-io/streams-proto v0.0.9/go.mod h1:W56mf4ZE7Pvm4oMhquQ+3WmsqvGWy8JRLXvGeFdi2W4=
 github.com/xdg-go/pbkdf2 v1.0.0/go.mod h1:jrpuAogTd400dnrH08LKmI/xc1MbPOebTwRqcT5RDeI=
 github.com/xdg-go/scram v1.1.1/go.mod h1:RaEWvsqvNKKvBPvcKeFjrG2cJqOkHTiyTpzz23ni57g=
 github.com/xdg-go/stringprep v1.0.3/go.mod h1:W3f5j4i+9rC0kuIEJL0ky1VpHXQU3ocBgklLGvcBnW8=
@@ -148,6 +150,8 @@ golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8T
 golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 google.golang.org/protobuf v1.26.0-rc.1/go.mod h1:jlhhOSvTdKEhbULTjvd4ARK9grFBp09yW+WbY/TyQbw=
 google.golang.org/protobuf v1.27.1/go.mod h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc=
+google.golang.org/protobuf v1.34.2 h1:6xV6lTsCfpGD21XK49h7MhtcApnLqkfYgPcdHftf6hg=
+google.golang.org/protobuf v1.34.2/go.mod h1:qYOHts0dSfpeUzUFpOMr/WGzszTmLH+DiWniOlNbLDw=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntNwaWcugrBjAiHlqqRiVk=
