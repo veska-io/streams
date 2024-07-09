@@ -1,0 +1,53 @@
+name: 'Deploy: Pubsub->Clickhouse'
+
+on:
+  push:
+    tags:
+      - '**'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      
+    steps:
+        - uses: actions/checkout@v4
+        
+        - name: Google Auth
+          id: auth
+          uses: 'google-github-actions/auth@v2'
+          with:
+            token_format: 'access_token'
+            workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER}}/locations/global/workloadIdentityPools/${{ secrets.GCP_WIF_POOL}}/providers/${{ secrets.GCP_WIF_PROVIDER }}'
+            service_account: '${{ secrets.GCP_DEPLOY_SERVICE_ACCOUNT }}'
+
+        - name: Setup Go 1.22.x
+          uses: actions/setup-go@v5
+          with:
+            go-version: '1.22.x'
+        
+        - name: Build
+          run:
+            # Extract version (last part after the last slash)
+            SERVICE_VERSION=$(basename "${{ github.ref_name }}")
+
+            # Extract path (everything before the last slash)
+            SERVICE_PATH=$(dirname "${{ github.ref_name }}")
+
+            # Replace slashes with underscores in the path
+            PATH_WITH_UNDERSCORES=$(echo "$PATH" | tr '/' '_')
+
+            go build -o "$PATH_WITH_UNDERSCORES" "$SERVICE_PATH/cmd/main.go"
+
+            FILE_NAME="$PATH_WITH_UNDERSCORES"@"$SERVICE_VERSION".zip
+
+            zip -r "$FILE_NAME" "$SERVICE_PATH"
+
+            echo "SERVICE_FILE=$FILE_NAME" >> $GITHUB_ENV
+
+        - id: 'upload-file'
+          uses: 'google-github-actions/upload-cloud-storage@v2'
+          with:
+            path: ${{ env.SERVICE_FILE }}
+            destination: 'streams-functions-deploy'
