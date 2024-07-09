@@ -14,7 +14,7 @@ jobs:
     steps:
         - uses: actions/checkout@v4
         
-        - name: Google Auth
+        - name: 'Google Auth'
           id: auth
           uses: 'google-github-actions/auth@v2'
           with:
@@ -22,7 +22,7 @@ jobs:
             workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER}}/locations/global/workloadIdentityPools/${{ secrets.GCP_WIF_POOL}}/providers/${{ secrets.GCP_WIF_PROVIDER }}'
             service_account: '${{ secrets.GCP_DEPLOY_SERVICE_ACCOUNT }}'
 
-        - name: Setup Go 1.22
+        - name: 'Setup Go 1.22'
           uses: 'actions/setup-go@v5'
           with:
             go-version: '1.22'
