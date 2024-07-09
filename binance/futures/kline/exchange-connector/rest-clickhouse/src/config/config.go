@@ -103,7 +103,7 @@ func mustLoadDefaults(k *koanf.Koanf) {
 }
 
 func mustCheckFileFlag() string {
-	var fFlag = flag.String("f", "", "Path to the configuration YAML file")
+	var fFlag = flag.String("ff", "", "Path to the configuration YAML file")
 
 	flag.Parse()
 
