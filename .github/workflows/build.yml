@@ -28,7 +28,7 @@ jobs:
             go-version: '1.22.x'
 
         - name: Build
-          run:
+          run: |-
             # Extract version (last part after the last slash)
             SERVICE_VERSION=$(basename "${{ github.ref_name }}")
 
