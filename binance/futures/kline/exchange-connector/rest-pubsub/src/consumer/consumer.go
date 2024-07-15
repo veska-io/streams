@@ -29,8 +29,16 @@ func New(ctx context.Context, logger *slog.Logger,
 }
 
 func ApiCall(task restc.Task) (*restc.ResponseMessage, error) {
+	maxItems := 1000
+	itemsToGet := maxItems
+
+	// TODO: may be an edge case
+	if task.End.Sub(task.Start) < time.Hour*time.Duration(maxItems) {
+		itemsToGet = int(task.End.Sub(task.Start).Hours()) + 1
+	}
+
 	restClient := binance.NewFuturesClient("", "")
-	klines, err := restClient.NewKlinesService().Symbol(task.Market).Limit(1000).
+	klines, err := restClient.NewKlinesService().Symbol(task.Market).Limit(itemsToGet).
 		Interval("1h").EndTime(task.End.UnixMilli()).Do(context.Background())
 	if err != nil {
 		fmt.Println(err)
@@ -64,7 +72,7 @@ func ApiCall(task restc.Task) (*restc.ResponseMessage, error) {
 		Start: start_datetime,
 		End:   end_datetime,
 		Data:  klines,
-		Last:  len(klines) < 1000,
+		Last:  len(klines) < maxItems,
 	}
 
 	return &msg, nil

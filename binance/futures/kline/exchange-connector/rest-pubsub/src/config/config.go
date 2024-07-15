@@ -20,6 +20,7 @@ const (
 	DEFAULT_DEBUG                       = false
 	DEFAULT_CONSUMER_TASK_QUANT_SECONDS = 60 * 60 * 24 * 1000
 	DEFAULT_CONSUMER_RPS                = 7
+	DEFAULT_CONSUMER_MAX_ITEMS          = 1000
 )
 
 type Config struct {
@@ -36,6 +37,7 @@ type ConsumerConfig struct {
 
 	Rps              uint8  `koanf:"rps"`
 	TaskQuantSeconds uint32 `koanf:"task_quant_seconds"`
+	MaxItems         uint32 `koanf:"max_items"`
 }
 
 type ProducerConfig struct {
@@ -85,6 +87,7 @@ func mustLoadDefaults(k *koanf.Koanf) {
 
 		"consumer.rps":                DEFAULT_CONSUMER_RPS,
 		"consumer.task_quant_seconds": DEFAULT_CONSUMER_TASK_QUANT_SECONDS,
+		"consumer.max_items":          DEFAULT_CONSUMER_MAX_ITEMS,
 	}, "."), nil)
 	if err != nil {
 		panic(fmt.Errorf("error while loading config defaults: %w", err))

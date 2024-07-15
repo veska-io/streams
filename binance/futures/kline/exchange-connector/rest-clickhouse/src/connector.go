@@ -66,9 +66,12 @@ func (c *Connector) Run() {
 
 		klinesResponse, ok := response.Data.([]*futures.Kline)
 		if !ok {
-			c.logger.Error("failed to cast response data to TradesResponse")
+			c.logger.Error("failed to cast response data to *futures.Kline")
 			continue
 		}
+
+		c.logger.Debug("received klines", slog.Int("count", len(klinesResponse)))
+
 		for _, k := range klinesResponse {
 
 			data := []any{
