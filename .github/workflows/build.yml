@@ -38,7 +38,7 @@ jobs:
             SERVICE_PATH=$(dirname "${{ github.ref_name }}")
 
             # Replace slashes with underscores in the path
-            PATH_WITH_UNDERSCORES=$(echo "$PATH" | tr '/' '_')
+            PATH_WITH_UNDERSCORES=$(echo "$SERVICE_PATH" | tr '/' '_')
 
             go build -o "$PATH_WITH_UNDERSCORES" "$SERVICE_PATH/cmd/main.go"
 
