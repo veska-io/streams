@@ -40,9 +40,11 @@ jobs:
             # Replace slashes with underscores in the path
             PATH_WITH_UNDERSCORES=$(echo "$SERVICE_PATH" | tr '/' '_')
 
+            cd $SERVICE_PATH
+
             go get .
 
-            go build -o "$PATH_WITH_UNDERSCORES" "$SERVICE_PATH/cmd/main.go"
+            go build -o "$PATH_WITH_UNDERSCORES" "cmd/main.go"
 
             FILE_NAME="$PATH_WITH_UNDERSCORES"@"$SERVICE_VERSION".zip
 
