@@ -48,7 +48,7 @@ jobs:
 
             FILE_NAME="$PATH_WITH_UNDERSCORES"@"$SERVICE_VERSION".zip
 
-            zip -r "$FILE_NAME" "$SERVICE_PATH"
+            zip -r "$FILE_NAME" .
 
             echo "SERVICE_FILE=$FILE_NAME" >> $GITHUB_ENV
 
