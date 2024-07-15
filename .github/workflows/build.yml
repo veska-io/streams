@@ -50,7 +50,9 @@ jobs:
 
             zip -r "$FILE_NAME" .
 
-            echo "SERVICE_FILE=$SERVICE_PATH/$FILE_NAME" >> $GITHUB_ENV
+            mv "$FILE_NAME" $GITHUB_WORKSPACE
+
+            echo "SERVICE_FILE=$FILE_NAME" >> $GITHUB_ENV
 
         - name: 'Upload File'
           uses: 'google-github-actions/upload-cloud-storage@v2'
