@@ -31,9 +31,11 @@ func New(ctx context.Context, logger *slog.Logger,
 func ApiCall(task restc.Task) (*restc.ResponseMessage, error) {
 	restClient := binance.NewFuturesClient("", "")
 	fRate, err := restClient.NewFundingRateHistoryService().Symbol(task.Market).Limit(1000).
-		EndTime(task.End.UnixMilli()).Do(context.Background())
+		StartTime(task.Start.UnixMilli()).EndTime(task.End.UnixMilli()).Do(context.Background())
 	if err != nil {
 		fmt.Println(err)
+		fmt.Println(task)
+		return nil, err
 	}
 
 	start_datetime := task.Start
