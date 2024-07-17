@@ -76,7 +76,7 @@ func (c *Connector) Run() {
 				response.Task.Market[:len(response.Task.Market)-4],
 				response.Task.Market[len(response.Task.Market)-4:],
 
-				uint64(fRate.FundingTime),
+				uint64(time.UnixMilli(fRate.FundingTime).Truncate(time.Hour).UnixMilli()),
 				fRate.FundingRate,
 				fRate.MarkPrice,
 
