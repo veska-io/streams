@@ -18,7 +18,7 @@ import (
 const (
 	DEFAULT_DEBUG                       = false
 	DEFAULT_CONSUMER_TASK_QUANT_SECONDS = 60 * 60 * 1000
-	DEFAULT_CONSUMER_RPS                = 4
+	DEFAULT_CONSUMER_RPS                = 7
 
 	DEFAULT_PRODUCER_DATABASE               = "default"
 	DEFAULT_PRODUCER_USER                   = "default"

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/adshao/go-binance/v2/futures"
-	"github.com/veska-io/streams-connectors/binance/futures/open-interest/exchange-connector/rest-pubsub/src/consumer"
+	"github.com/veska-io/streams-connectors/binance/futures/open-interest/exchange-connector/rest-clickhouse/src/consumer"
 	chprd "github.com/veska-io/streams-connectors/producers/clickhouse"
 )
 

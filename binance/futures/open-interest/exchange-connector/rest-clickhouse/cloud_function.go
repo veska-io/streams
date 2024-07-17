@@ -6,15 +6,15 @@ import (
 	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
 	"github.com/cloudevents/sdk-go/v2/event"
 
-	"github.com/veska-io/streams-connectors/binance/futures/open-interest/exchange-connector/pubsub-clickhouse/cmd/runner"
+	"github.com/veska-io/streams-connectors/binance/futures/open-interest/exchange-connector/rest-clickhouse/cmd/runner"
 )
 
 func init() {
-	functions.CloudEvent("binanceKlineParser", RunConnector)
+	functions.CloudEvent("RunMain", RunConnector)
 }
 
 func RunConnector(ctx context.Context, e event.Event) error {
-	runner.MustRun(ctx)
+	runner.MustRun()
 
 	return nil
 }
