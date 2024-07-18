@@ -7,8 +7,14 @@ import (
 
 	"github.com/adshao/go-binance/v2"
 	common "github.com/adshao/go-binance/v2/common"
+	"github.com/adshao/go-binance/v2/futures"
 	restc "github.com/veska-io/streams-connectors/consumers/rest"
 )
+
+type OpenInterest struct {
+	Oi    *futures.OpenInterest
+	Ratio []*futures.LongShortRatio
+}
 
 type Consumer struct {
 	restc.Consumer
@@ -39,6 +45,14 @@ func ApiCall(task restc.Task) (*restc.ResponseMessage, error) {
 		}
 	}
 
+	ratio, err := restClient.NewLongShortRatioService().Symbol(task.Market).Period("1h").Limit(1).Do(context.Background())
+	if err != nil {
+		e, _ := err.(*common.APIError)
+		if e.Code != -4108 {
+			return nil, e
+		}
+	}
+
 	start_datetime := task.Start
 	end_datetime := task.End
 
@@ -46,7 +60,7 @@ func ApiCall(task restc.Task) (*restc.ResponseMessage, error) {
 		Task:  task,
 		Start: start_datetime,
 		End:   end_datetime,
-		Data:  oi,
+		Data:  &OpenInterest{Oi: oi, Ratio: ratio},
 		Last:  true,
 	}
 

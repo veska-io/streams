@@ -6,7 +6,6 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/adshao/go-binance/v2/futures"
 	"github.com/veska-io/streams-connectors/binance/futures/open-interest/exchange-connector/rest-clickhouse/src/consumer"
 	chprd "github.com/veska-io/streams-connectors/producers/clickhouse"
 )
@@ -64,13 +63,13 @@ func (c *Connector) Run() {
 			c.logger.Info("precent completed", slog.Uint64("status", uint64(c.consumer.Status())))
 		}
 
-		oiResponse, ok := response.Data.(*futures.OpenInterest)
+		oiResponse, ok := response.Data.(*consumer.OpenInterest)
 		if !ok {
 			c.logger.Error("failed to cast response data to OpenInterest")
 			continue
 		}
 
-		if oiResponse == nil {
+		if oiResponse.Oi == nil {
 			c.logger.Warn("Empty OpenInterest")
 			continue
 		}
@@ -80,8 +79,11 @@ func (c *Connector) Run() {
 			response.Task.Market[:len(response.Task.Market)-4],
 			response.Task.Market[len(response.Task.Market)-4:],
 
-			uint64(oiResponse.Time),
-			oiResponse.OpenInterest,
+			uint64(oiResponse.Oi.Time),
+			oiResponse.Oi.OpenInterest,
+			oiResponse.Ratio[0].LongShortRatio,
+			oiResponse.Ratio[0].LongAccount,
+			oiResponse.Ratio[0].ShortAccount,
 
 			time.Now().UnixMilli(),
 		}
