@@ -1,0 +1,24 @@
+name: 'Build Connectors AWS'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::869429936892:role/github-deploy
+          role-session-name: samplerolesession
+          aws-region: eu-north-1
+
+        - name: Copy files to S3
+          run: aws s3api copy-object --copy-source veska-deploy/terraform/connectors-state/main.tfstate --key terraform/connectors-state/main.tfstate --bucket veska-deploy-eu-north-1

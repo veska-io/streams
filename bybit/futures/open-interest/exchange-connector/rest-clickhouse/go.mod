@@ -1,4 +1,4 @@
-module github.com/veska-io/streams-connectors/binance/futures/funding-rate/exchange-connector/rest-clickhouse
+module github.com/veska-io/streams-connectors/bybit/futures/open-interest/exchange-connector/rest-clickhouse
 
 go 1.22.2
 
@@ -19,7 +19,6 @@ require (
 	github.com/ClickHouse/ch-go v0.61.5 // indirect
 	github.com/ClickHouse/clickhouse-go/v2 v2.26.0 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
-	github.com/aws/aws-lambda-go v1.47.0 // indirect
 	github.com/bitly/go-simplejson v0.5.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-faster/city v1.0.1 // indirect
@@ -44,5 +43,6 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
+	golang.org/x/time v0.5.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

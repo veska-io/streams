@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/adshao/go-binance/v2"
-	"github.com/veska-io/streams-connectors/binance/futures/funding-rate/exchange-connector/rest-clickhouse/cmd/runner"
+	connector "github.com/veska-io/streams-connectors/binance/futures/funding-rate/exchange-connector/rest-clickhouse/src"
 )
 
 func TestStrangeRequest(t *testing.T) {
@@ -25,5 +25,5 @@ func TestStrangeRequest(t *testing.T) {
 }
 
 func TestRun(t *testing.T) {
-	runner.MustRun()
+	connector.MustRun()
 }

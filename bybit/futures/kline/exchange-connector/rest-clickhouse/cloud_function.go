@@ -6,7 +6,7 @@ import (
 	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
 	"github.com/cloudevents/sdk-go/v2/event"
 
-	connector "github.com/veska-io/streams-connectors/binance/futures/funding-rate/exchange-connector/rest-clickhouse/src"
+	"github.com/veska-io/streams-connectors/bybit/futures/kline/exchange-connector/rest-clickhouse/cmd/runner"
 )
 
 func init() {
@@ -14,7 +14,7 @@ func init() {
 }
 
 func RunConnector(ctx context.Context, e event.Event) error {
-	connector.MustRun()
+	runner.MustRun(ctx)
 
 	return nil
 }
