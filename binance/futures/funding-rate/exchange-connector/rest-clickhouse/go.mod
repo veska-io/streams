@@ -5,6 +5,7 @@ go 1.22.2
 require (
 	github.com/GoogleCloudPlatform/functions-framework-go v1.8.1
 	github.com/adshao/go-binance/v2 v2.5.1
+	github.com/aws/aws-lambda-go v1.47.0
 	github.com/cloudevents/sdk-go/v2 v2.15.2
 	github.com/knadh/koanf/parsers/yaml v0.1.0
 	github.com/knadh/koanf/providers/confmap v0.1.0
@@ -19,7 +20,6 @@ require (
 	github.com/ClickHouse/ch-go v0.61.5 // indirect
 	github.com/ClickHouse/clickhouse-go/v2 v2.26.0 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
-	github.com/aws/aws-lambda-go v1.47.0 // indirect
 	github.com/bitly/go-simplejson v0.5.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-faster/city v1.0.1 // indirect
