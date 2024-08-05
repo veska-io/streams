@@ -1,9 +1,8 @@
 name: 'Build Function/Service'
 
 on:
-  push:
-    tags:
-      - '**'
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest

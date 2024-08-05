@@ -1,7 +1,9 @@
 name: 'Build Connectors AWS'
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - '**'
 
 jobs:
   deploy:
@@ -13,12 +15,41 @@ jobs:
     steps:
         - uses: actions/checkout@v4
 
-        - name: configure aws credentials
+        - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@v3
           with:
             role-to-assume: arn:aws:iam::869429936892:role/github-deploy
             role-session-name: samplerolesession
             aws-region: eu-north-1
 
-        - name: Copy files to S3
-          run: aws s3api copy-object --copy-source veska-deploy/terraform/connectors-state/main.tfstate --key terraform/connectors-state/main.tfstate --bucket veska-deploy-eu-north-1
+        - name: 'Setup Go 1.22'
+          uses: 'actions/setup-go@v5'
+          with:
+            go-version: '1.22'
+
+        - name: Build
+          run: |-
+            # Extract version (last part after the last slash)
+            SERVICE_VERSION=$(basename "${{ github.ref_name }}")
+
+            # Extract path (everything before the last slash)
+            SERVICE_PATH=$(dirname "${{ github.ref_name }}")
+
+            # Replace slashes with underscores in the path
+            PATH_WITH_UNDERSCORES=$(echo "$SERVICE_PATH" | tr '/' '_')
+
+            cd $SERVICE_PATH
+
+            go get .
+
+            GOOS=linux GOARCH=arm64 go build -tags lambda.norpc -o bootstrap cmd/aws_lambda/main.go
+
+            FILE_NAME="$PATH_WITH_UNDERSCORES"@"$SERVICE_VERSION".zip
+
+            zip "$FILE_NAME" bootstrap
+
+            echo "SERVICE_FILE=$SERVICE_PATH/$FILE_NAME" >> $GITHUB_ENV
+            echo "SERVICE_FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
+
+        - name: 'Upload File'
+          run: aws s3api put-object --bucket veska-deploy-eu-north-1 --key "connectors/$SERVICE_FILE_NAME" --body "$SERVICE_FILE"
