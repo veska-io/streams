@@ -9,7 +9,7 @@ import (
 	"github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/rest-clickhouse/src/logger"
 	"github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/rest-pubsub/src/consumer"
 
-	"github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/rest-clickhouse/cmd/runner"
+	connector "github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/rest-clickhouse/src"
 )
 
 func TestConsumer(t *testing.T) {
@@ -42,5 +42,5 @@ func TestConsumer(t *testing.T) {
 }
 
 func TestRun(t *testing.T) {
-	runner.MustRun(context.Background())
+	connector.MustRun(context.Background())
 }

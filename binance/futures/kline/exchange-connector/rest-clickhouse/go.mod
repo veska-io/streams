@@ -5,6 +5,7 @@ go 1.22.2
 require (
 	github.com/GoogleCloudPlatform/functions-framework-go v1.8.1
 	github.com/adshao/go-binance/v2 v2.5.1
+	github.com/aws/aws-lambda-go v1.47.0
 	github.com/cloudevents/sdk-go/v2 v2.14.0
 	github.com/knadh/koanf/parsers/yaml v0.1.0
 	github.com/knadh/koanf/providers/confmap v0.1.0
