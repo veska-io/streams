@@ -1,12 +1,10 @@
-package connector_test
+package main
 
 import (
-	"context"
-	"testing"
-
+	"github.com/aws/aws-lambda-go/lambda"
 	connector "github.com/veska-io/streams-connectors/bybit/futures/kline/exchange-connector/rest-clickhouse/src"
 )
 
-func TestRun(t *testing.T) {
-	connector.MustRun(context.Background())
+func main() {
+	lambda.Start(connector.MustRun)
 }

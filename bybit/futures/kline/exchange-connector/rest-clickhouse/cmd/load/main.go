@@ -1,12 +1,11 @@
-package connector_test
+package main
 
 import (
 	"context"
-	"testing"
 
 	connector "github.com/veska-io/streams-connectors/bybit/futures/kline/exchange-connector/rest-clickhouse/src"
 )
 
-func TestRun(t *testing.T) {
+func main() {
 	connector.MustRun(context.Background())
 }
