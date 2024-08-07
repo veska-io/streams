@@ -1,4 +1,4 @@
-package runner
+package connector
 
 import (
 	"context"
@@ -11,7 +11,6 @@ import (
 
 	"github.com/veska-io/streams-connectors/bybit/futures/funding-rate/exchange-connector/rest-clickhouse/src/logger"
 
-	loader "github.com/veska-io/streams-connectors/bybit/futures/funding-rate/exchange-connector/rest-clickhouse/src"
 	"github.com/veska-io/streams-connectors/bybit/futures/funding-rate/exchange-connector/rest-clickhouse/src/config"
 )
 
@@ -23,7 +22,7 @@ func MustRun() {
 	logger.Info("starting conector")
 
 	ctx, cancel := context.WithCancel(context.Background())
-	connector, err := loader.New(ctx, logger,
+	connector, err := New(ctx, logger,
 		cfg.Consumer.Markets, cfg.Consumer.Start, cfg.Consumer.End,
 		cfg.Consumer.Rps, time.Duration(cfg.Consumer.TaskQuantSeconds)*time.Second,
 		cfg.Producer.Host, cfg.Producer.Database, cfg.Producer.User, cfg.Producer.Password,
