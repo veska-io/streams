@@ -3,7 +3,7 @@ package config_test
 import (
 	"testing"
 
-	"github.com/veska-io/streams-connectors/binance/futures/open-interest/exchange-connector/rest-clickhouse/src/config"
+	"github.com/veska-io/streams-connectors/bybit/futures/open-interest/exchange-connector/rest-clickhouse/src/config"
 )
 
 func TestCOnfig(t *testing.T) {
