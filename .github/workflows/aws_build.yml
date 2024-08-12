@@ -3,7 +3,7 @@ name: 'Build Connectors AWS'
 on:
   push:
     tags:
-      - '**'
+      - '**exchange-connector**'
 
 jobs:
   deploy:
