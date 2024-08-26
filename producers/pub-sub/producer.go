@@ -33,7 +33,6 @@ func New(ctx context.Context, logger *slog.Logger,
 ) (*Producer, error) {
 	client, err := pubsub.NewClient(ctx, projectId)
 	if err != nil {
-		logger.Error("error creating a pubsub client: %v", err)
 		return nil, fmt.Errorf("error creating a pubsub client: %w", err)
 	}
 

@@ -1,6 +1,6 @@
 module github.com/veska-io/streams-connectors/bybit/futures/funding-rate/exchange-connector/rest-clickhouse
 
-go 1.22.2
+go 1.23
 
 require (
 	github.com/GoogleCloudPlatform/functions-framework-go v1.8.1

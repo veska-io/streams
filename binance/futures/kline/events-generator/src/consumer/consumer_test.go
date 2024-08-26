@@ -1,0 +1,34 @@
+package consumer_test
+
+import (
+	"context"
+	"testing"
+
+	config "github.com/veska-io/streams-connectors/binance/futures/kline/events-generator/src/config"
+	local_consumer "github.com/veska-io/streams-connectors/binance/futures/kline/events-generator/src/consumer"
+	logger "github.com/veska-io/streams-connectors/binance/futures/kline/events-generator/src/logger"
+)
+
+func TestConsumer(t *testing.T) {
+	log := logger.New(false)
+	cfg := config.MustNew()
+
+	c, err := local_consumer.New(
+		context.Background(), log, "test", "v1",
+		cfg.Consumer.Host, cfg.Consumer.Port, cfg.Consumer.Database, cfg.Consumer.User, cfg.Consumer.Password,
+		cfg.Consumer.Start, cfg.Consumer.End,
+	)
+
+	if err != nil {
+		t.Errorf("failed to create consumer: %v", err)
+	}
+
+	go c.Run()
+
+	for row := range c.DataStream {
+		kline := local_consumer.Kline{}
+		(*row).ScanStruct(&kline)
+
+		t.Logf("Kline: %+v", kline)
+	}
+}

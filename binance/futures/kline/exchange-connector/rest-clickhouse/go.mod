@@ -1,6 +1,6 @@
 module github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/rest-clickhouse
 
-go 1.22.2
+go 1.23
 
 require (
 	github.com/GoogleCloudPlatform/functions-framework-go v1.8.1
@@ -13,6 +13,7 @@ require (
 	github.com/knadh/koanf/providers/file v1.0.0
 	github.com/knadh/koanf/v2 v2.1.1
 	github.com/veska-io/streams-connectors/binance/futures/kline/exchange-connector/rest-pubsub v0.0.0-20240715104208-7058976b4e40
+	github.com/veska-io/streams-connectors/consumers/rest v0.0.2
 	github.com/veska-io/streams-connectors/producers/clickhouse v0.0.2
 )
 
@@ -39,7 +40,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
-	github.com/veska-io/streams-connectors/consumers/rest v0.0.2 // indirect
 	go.opentelemetry.io/otel v1.28.0 // indirect
 	go.opentelemetry.io/otel/trace v1.28.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect

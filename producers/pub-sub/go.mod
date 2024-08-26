@@ -1,6 +1,6 @@
 module github.com/veska-io/streams-connectors/producers/pub-sub
 
-go 1.22
+go 1.23
 
 require cloud.google.com/go/pubsub v1.40.0
 
