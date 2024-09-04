@@ -15,7 +15,8 @@ func TestConsumer(t *testing.T) {
 
 	c, err := local_consumer.New(
 		context.Background(), log, "test", "v1",
-		cfg.Consumer.Host, cfg.Consumer.Port, cfg.Consumer.Database, cfg.Consumer.User, cfg.Consumer.Password,
+		cfg.Clickhouse.Host, cfg.Clickhouse.Port, cfg.Clickhouse.Database,
+		cfg.Clickhouse.User, cfg.Clickhouse.Password,
 		cfg.Consumer.Start, cfg.Consumer.End,
 	)
 

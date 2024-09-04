@@ -2,14 +2,13 @@ package clickhouse
 
 import (
 	"context"
-	"crypto/tls"
 
-	"fmt"
 	"log/slog"
 	"time"
 
 	"github.com/ClickHouse/clickhouse-go/v2"
 	"github.com/ClickHouse/clickhouse-go/v2/lib/driver"
+	"github.com/veska-io/streams-connectors/producers/clickhouse/connection"
 )
 
 type Message struct {
@@ -39,18 +38,12 @@ type Producer struct {
 func New(ctx context.Context, logger *slog.Logger,
 	host, database, username, password, table string, writeInterval time.Duration,
 ) (*Producer, error) {
-
-	conn, err := clickhouse.Open(&clickhouse.Options{
-		Addr: []string{host + ":9440"},
-		Auth: clickhouse.Auth{
-			Database: database,
-			Username: username,
-			Password: password,
-		},
-		TLS: &tls.Config{},
-	})
+	conn, err := connection.New(
+		ctx, logger,
+		host, database, username, password,
+	)
 	if err != nil {
-		return nil, fmt.Errorf("failed to open clickhouse connection: %w", err)
+		return nil, err
 	}
 
 	if err := conn.Ping(ctx); err != nil {

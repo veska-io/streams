@@ -14,20 +14,23 @@ import (
 )
 
 const (
-	DEFAULT_DEBUG = false
+	DEFAULT_DEBUG                           = false
+	DEFAULT_CONSUMER_PORT                   = 9440
+	DEFAULT_PRODUCER_WRITE_INTERVAL_SECONDS = 3
 )
 
 type Config struct {
 	Debug bool `koanf:"debug"`
 
+	Clickhouse ClickhouseConfig `koanf:"clickhouse"`
+
 	Consumer ConsumerConfig `koanf:"consumer"`
-	Producer ProducerConfig `koanf:"producer"`
+
+	PubsubProducer     PubsubProducerConfig     `koanf:"pubsub_producer"`
+	ClickhouseProducer ClickhouseProducerConfig `koanf:"clickhouse_producer"`
 }
 
-type ConsumerConfig struct {
-	Start time.Time `koanf:"start"`
-	End   time.Time `koanf:"end"`
-
+type ClickhouseConfig struct {
 	Host     string `koanf:"host"`
 	Port     uint32 `koanf:"port"`
 	Database string `koanf:"database"`
@@ -35,9 +38,19 @@ type ConsumerConfig struct {
 	Password string `koanf:"password"`
 }
 
-type ProducerConfig struct {
+type ConsumerConfig struct {
+	Start time.Time `koanf:"start"`
+	End   time.Time `koanf:"end"`
+}
+
+type PubsubProducerConfig struct {
 	ProjectId string `koanf:"project_id"`
 	TopicId   string `koanf:"topic_id"`
+}
+
+type ClickhouseProducerConfig struct {
+	Table                string `koanf:"table"`
+	WriteIntervalSeconds int64  `koanf:"write_interval_seconds"`
 }
 
 func MustNew() *Config {
@@ -65,16 +78,18 @@ func MustNew() *Config {
 }
 
 func mustLoadDefaults(k *koanf.Koanf) {
-	now := time.Now().UTC()
-
-	end := time.Date(now.Year(), now.Month(), now.Day(), now.Hour(), 0, 0, 0, time.UTC)
-	start := end.Add(-1 * time.Duration(time.Hour))
+	end := time.Now().UTC().Truncate(time.Hour)
+	start := end.Add(-2 * time.Duration(time.Hour))
 
 	err := k.Load(confmap.Provider(map[string]interface{}{
 		"debug": DEFAULT_DEBUG,
 
+		"clickhouse.port": DEFAULT_CONSUMER_PORT,
+
 		"consumer.start": start,
 		"consumer.end":   end,
+
+		"clickhouse_producer.write_interval_seconds": DEFAULT_PRODUCER_WRITE_INTERVAL_SECONDS,
 	}, "."), nil)
 	if err != nil {
 		panic(fmt.Errorf("error while loading config defaults: %w", err))
