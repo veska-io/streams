@@ -15,7 +15,7 @@ import (
 const (
 	DEFAULT_DEBUG = false
 
-	DEFAULT_IDLE_TIMEOUT_SECONDS = 10
+	DEFAULT_IDLE_TIMEOUT_SECONDS = 5
 
 	DEFAULT_CONSUMER_MAX_OUTSTANDING_MESSAGES = 100000
 
@@ -95,7 +95,7 @@ func mustLoadDefaults(k *koanf.Koanf) {
 }
 
 func mustCheckFileFlag() string {
-	var fFlag = flag.String("f", "", "Path to the configuration YAML file")
+	var fFlag = flag.String("ff", "", "Path to the configuration YAML file")
 
 	flag.Parse()
 
