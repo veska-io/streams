@@ -50,7 +50,6 @@ func (p *Producer) Run() {
 	go func() {
 		for msg := range p.pubsubProducer.StatusStream {
 			if msg.Error != nil {
-				p.logger.Error("producer status", slog.String("error", msg.Error.Error()))
 				continue
 			}
 
