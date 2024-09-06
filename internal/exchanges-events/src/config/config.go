@@ -3,6 +3,7 @@ package config
 import (
 	"flag"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/knadh/koanf/parsers/yaml"
@@ -59,9 +60,11 @@ func MustNew() *Config {
 
 	mustLoadDefaults(k)
 
-	fileFlag := mustCheckFileFlag()
-	if fileFlag != "" {
-		mustLoadYamlFile(k, fileFlag)
+	if os.Getenv("CONNECTOR_CLOUD_FUNCTION") != "true" {
+		fileFlag := mustCheckFileFlag()
+		if fileFlag != "" {
+			mustLoadYamlFile(k, fileFlag)
+		}
 	}
 
 	mustLoadEnv(k)

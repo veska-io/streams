@@ -3,6 +3,7 @@ package config
 import (
 	"flag"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
@@ -15,12 +16,14 @@ import (
 
 const (
 	DEFAULT_DEBUG                           = false
+	DEFAULT_CLOUD_FUNCTION                  = false
 	DEFAULT_CONSUMER_PORT                   = 9440
 	DEFAULT_PRODUCER_WRITE_INTERVAL_SECONDS = 3
 )
 
 type Config struct {
-	Debug bool `koanf:"debug"`
+	Debug         bool `koanf:"debug"`
+	CloudFunction bool `koanf:"cloud_function"`
 
 	Clickhouse ClickhouseConfig `koanf:"clickhouse"`
 
@@ -60,9 +63,11 @@ func MustNew() *Config {
 
 	mustLoadDefaults(k)
 
-	fileFlag := mustCheckFileFlag()
-	if fileFlag != "" {
-		mustLoadYamlFile(k, fileFlag)
+	if os.Getenv("CONNECTOR_CLOUD_FUNCTION") != "true" {
+		fileFlag := mustCheckFileFlag()
+		if fileFlag != "" {
+			mustLoadYamlFile(k, fileFlag)
+		}
 	}
 
 	mustLoadEnv(k)
@@ -82,7 +87,8 @@ func mustLoadDefaults(k *koanf.Koanf) {
 	start := end.Add(-2 * time.Duration(time.Hour))
 
 	err := k.Load(confmap.Provider(map[string]interface{}{
-		"debug": DEFAULT_DEBUG,
+		"debug":          DEFAULT_DEBUG,
+		"cloud_function": DEFAULT_CLOUD_FUNCTION,
 
 		"clickhouse.port": DEFAULT_CONSUMER_PORT,
 
