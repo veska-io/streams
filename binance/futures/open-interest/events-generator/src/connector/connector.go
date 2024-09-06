@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	local_consumer "github.com/veska-io/streams-connectors/binance/futures/kline/events-generator/src/consumer"
+	local_consumer "github.com/veska-io/streams-connectors/binance/futures/open-interest/events-generator/src/consumer"
 	consumer "github.com/veska-io/streams-connectors/consumers/clickhouse"
 	eeventspb "github.com/veska-io/streams-proto/gen/go/streams"
 )
@@ -65,30 +65,12 @@ func (c *Connector) Run() {
 	}()
 
 	for row := range c.consumer.DataStream {
-		events := []*eeventspb.ExchangesEvent{}
+		openInterest := local_consumer.OpenInterest{}
+		(*row).ScanStruct(&openInterest)
 
-		kline := local_consumer.Kline{}
-		(*row).ScanStruct(&kline)
-
-		priceEvent, err := ExtractPriceEvent(kline)
+		events, err := ExtractEvents(openInterest)
 		if err != nil {
-			c.logger.Error("failed to extract price event", slog.String("err", err.Error()))
-		} else {
-			events = append(events, priceEvent)
-		}
-
-		volumeEvent, err := ExtractVolumeEvent(kline)
-		if err != nil {
-			c.logger.Error("failed to extract volume event", slog.String("err", err.Error()))
-		} else {
-			events = append(events, volumeEvent)
-		}
-
-		tradesEvent, err := ExtractTradesEvent(kline)
-		if err != nil {
-			c.logger.Error("failed to extract trades event", slog.String("err", err.Error()))
-		} else {
-			events = append(events, tradesEvent)
+			c.logger.Error("failed to extract oi event", slog.String("err", err.Error()))
 		}
 
 		for _, event := range events {

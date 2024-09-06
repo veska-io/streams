@@ -31,7 +31,6 @@ func ExtractPriceEvent(kline local_consumer.Kline) (*eeventspb.ExchangesEvent, e
 	}
 
 	event := &eeventspb.ExchangesEvent{
-		Event:          "price",
 		EventTimestamp: kline.KlineTimestamp,
 
 		Exchange: "binance",
@@ -39,10 +38,14 @@ func ExtractPriceEvent(kline local_consumer.Kline) (*eeventspb.ExchangesEvent, e
 		Base:     kline.Base,
 		Quot:     "usd",
 
-		PriceOpen:  &priceOpen,
-		PriceHigh:  &priceHigh,
-		PriceLow:   &priceLow,
-		PriceClose: &priceClose,
+		Event: &eeventspb.ExchangesEvent_Price{
+			Price: &eeventspb.ExchangesEvent_PriceEvent{
+				PriceOpen:  priceOpen,
+				PriceHigh:  priceHigh,
+				PriceLow:   priceLow,
+				PriceClose: priceClose,
+			},
+		},
 
 		ProcessedTimestamp: uint64(time.Now().UTC().UnixMilli()),
 	}
@@ -75,7 +78,6 @@ func ExtractVolumeEvent(kline local_consumer.Kline) (*eeventspb.ExchangesEvent, 
 	volumeQuotSellTaker := volumeQuot - volumeQuotBuyTaker
 
 	event := &eeventspb.ExchangesEvent{
-		Event:          "volume",
 		EventTimestamp: kline.KlineTimestamp,
 
 		Exchange: "binance",
@@ -83,12 +85,16 @@ func ExtractVolumeEvent(kline local_consumer.Kline) (*eeventspb.ExchangesEvent, 
 		Base:     kline.Base,
 		Quot:     "usd",
 
-		VolumeBase:          &volumeBase,
-		VolumeQuot:          &volumeQuot,
-		VolumeBaseBuyTaker:  &volumeBaseBuyTaker,
-		VolumeQuotBuyTaker:  &volumeQuotBuyTaker,
-		VolumeBaseSellTaker: &volumeBaseSellTaker,
-		VolumeQuotSellTaker: &volumeQuotSellTaker,
+		Event: &eeventspb.ExchangesEvent_Volume{
+			Volume: &eeventspb.ExchangesEvent_VolumeEvent{
+				VolumeBase:          volumeBase,
+				VolumeQuot:          volumeQuot,
+				VolumeBaseBuyTaker:  volumeBaseBuyTaker,
+				VolumeQuotBuyTaker:  volumeQuotBuyTaker,
+				VolumeBaseSellTaker: volumeBaseSellTaker,
+				VolumeQuotSellTaker: volumeQuotSellTaker,
+			},
+		},
 
 		ProcessedTimestamp: uint64(time.Now().UTC().UnixMilli()),
 	}
@@ -100,7 +106,6 @@ func ExtractTradesEvent(kline local_consumer.Kline) (*eeventspb.ExchangesEvent, 
 	tradeNum := kline.TradeNum
 
 	event := &eeventspb.ExchangesEvent{
-		Event:          "trades",
 		EventTimestamp: kline.KlineTimestamp,
 
 		Exchange: "binance",
@@ -108,7 +113,11 @@ func ExtractTradesEvent(kline local_consumer.Kline) (*eeventspb.ExchangesEvent, 
 		Base:     kline.Base,
 		Quot:     "usd",
 
-		TradesCount: &tradeNum,
+		Event: &eeventspb.ExchangesEvent_Trades{
+			Trades: &eeventspb.ExchangesEvent_TradesEvent{
+				Count: tradeNum,
+			},
+		},
 
 		ProcessedTimestamp: uint64(time.Now().UTC().UnixMilli()),
 	}
