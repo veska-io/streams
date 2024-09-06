@@ -46,7 +46,7 @@ jobs:
 
             go get .
 
-            go build -o "$PATH_WITH_UNDERSCORES" "cmd/main.go"
+            go build -o "$PATH_WITH_UNDERSCORES" "cmd/default/main.go"
 
             rm $PATH_WITH_UNDERSCORES
 
