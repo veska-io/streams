@@ -13,6 +13,7 @@ func init() {
 	functions.CloudEvent("RunMain", RunConnector)
 }
 
+// RunConnector ...
 func RunConnector(ctx context.Context, e event.Event) error {
 	connector.MustRun(ctx)
 
