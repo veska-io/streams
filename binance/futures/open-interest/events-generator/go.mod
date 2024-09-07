@@ -14,7 +14,7 @@ require (
 	github.com/veska-io/streams-connectors/consumers/clickhouse v0.0.1
 	github.com/veska-io/streams-connectors/producers/clickhouse v0.0.2
 	github.com/veska-io/streams-connectors/producers/pub-sub v0.0.3
-	github.com/veska-io/streams-proto v0.0.12
+	github.com/veska-io/streams-proto v0.0.15
 	google.golang.org/protobuf v1.34.2
 )
 
