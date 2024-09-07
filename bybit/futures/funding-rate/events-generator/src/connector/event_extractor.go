@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	local_consumer "github.com/veska-io/streams-connectors/binance/futures/funding-rate/events-generator/src/consumer"
+	local_consumer "github.com/veska-io/streams-connectors/bybit/futures/funding-rate/events-generator/src/consumer"
 	eeventspb "github.com/veska-io/streams-proto/gen/go/streams"
 )
 
@@ -28,11 +28,6 @@ func ExtractFundingEvent(funding local_consumer.Funding) (*eeventspb.ExchangesEv
 		return nil, fmt.Errorf("unable to parse funding rate: %w", err)
 	}
 
-	fundingPrice, err := strconv.ParseFloat(funding.MarkPrice, 64)
-	if err != nil {
-		return nil, fmt.Errorf("unable to parse price high: %w", err)
-	}
-
 	event := &eeventspb.ExchangesEvent{
 		EventTimestamp: funding.FundingTimestamp,
 
@@ -43,8 +38,7 @@ func ExtractFundingEvent(funding local_consumer.Funding) (*eeventspb.ExchangesEv
 
 		Event: &eeventspb.ExchangesEvent_FundingRate{
 			FundingRate: &eeventspb.ExchangesEvent_FundingRateEvent{
-				FundingRate:  &fundingRate,
-				FundingPrice: &fundingPrice,
+				FundingRate: &fundingRate,
 			},
 		},
 

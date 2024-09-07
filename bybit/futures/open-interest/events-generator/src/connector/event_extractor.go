@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	local_consumer "github.com/veska-io/streams-connectors/binance/futures/open-interest/events-generator/src/consumer"
+	local_consumer "github.com/veska-io/streams-connectors/bybit/futures/open-interest/events-generator/src/consumer"
 	eeventspb "github.com/veska-io/streams-proto/gen/go/streams"
 )
 

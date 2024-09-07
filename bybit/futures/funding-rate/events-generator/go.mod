@@ -1,4 +1,4 @@
-module github.com/veska-io/streams-connectors/binance/futures/open-interest/events-generator
+module github.com/veska-io/streams-connectors/bybit/futures/funding-rate/events-generator
 
 go 1.23
 
