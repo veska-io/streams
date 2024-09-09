@@ -5,6 +5,7 @@ on:
     tags:
       - '**events-generator**'
       - '**exchanges-events**'
+      - '**aggregates**'
 
 jobs:
   deploy:
