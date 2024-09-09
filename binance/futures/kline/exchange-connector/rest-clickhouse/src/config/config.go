@@ -84,7 +84,7 @@ func mustLoadDefaults(k *koanf.Koanf) {
 	now := time.Now().UTC()
 
 	end := time.Date(now.Year(), now.Month(), now.Day(), now.Hour(), 0, 0, 0, time.UTC)
-	start := end.Add(-1 * time.Duration(time.Hour))
+	start := end.Add(-2 * time.Duration(time.Hour))
 
 	err := k.Load(confmap.Provider(map[string]interface{}{
 		"debug": DEFAULT_DEBUG,

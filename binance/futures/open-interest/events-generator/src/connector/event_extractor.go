@@ -29,7 +29,7 @@ func ExtractFundingEvent(openInterest local_consumer.OpenInterest) (*eeventspb.E
 	}
 
 	event := &eeventspb.ExchangesEvent{
-		EventTimestamp: openInterest.OiTimestamp,
+		EventTimestamp: uint64((time.UnixMilli(int64(openInterest.OiTimestamp)).Truncate(time.Hour)).UnixMilli()),
 
 		Exchange: "binance",
 		Market:   fmt.Sprintf("%s-%s", openInterest.Base, "usd"),
