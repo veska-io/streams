@@ -79,6 +79,8 @@ func (p *Producer) GetStatusStream() <-chan any {
 }
 
 func TransformEvent(event *eeventspb.ExchangesEvent) []any {
+	eventName := "price"
+
 	chEvent := []any{
 		event.EventTimestamp,
 		event.Exchange,
@@ -89,63 +91,74 @@ func TransformEvent(event *eeventspb.ExchangesEvent) []any {
 
 	if event.GetPrice() != nil {
 		chEvent = append(chEvent,
-			event.GetPrice().GetPriceOpen(),
-			event.GetPrice().GetPriceClose(),
-			event.GetPrice().GetPriceHigh(),
-			event.GetPrice().GetPriceLow(),
+			event.GetPrice().PriceOpen,
+			event.GetPrice().PriceClose,
+			event.GetPrice().PriceHigh,
+			event.GetPrice().PriceLow,
 		)
 	} else {
 		chEvent = append(chEvent, nil, nil, nil, nil)
 	}
 
 	if event.GetVolume() != nil {
+		eventName = "volume"
+
 		chEvent = append(chEvent,
-			event.GetVolume().GetVolumeBase(),
-			event.GetVolume().GetVolumeQuot(),
-			event.GetVolume().GetVolumeBaseBuyTaker(),
-			event.GetVolume().GetVolumeQuotBuyTaker(),
-			event.GetVolume().GetVolumeBaseSellTaker(),
-			event.GetVolume().GetVolumeQuotSellTaker(),
+			event.GetVolume().VolumeBase,
+			event.GetVolume().VolumeQuot,
+			event.GetVolume().VolumeBaseBuyTaker,
+			event.GetVolume().VolumeQuotBuyTaker,
+			event.GetVolume().VolumeBaseSellTaker,
+			event.GetVolume().VolumeQuotSellTaker,
 		)
 	} else {
 		chEvent = append(chEvent, nil, nil, nil, nil, nil, nil)
 	}
 
 	if event.GetOi() != nil {
-		chEvent = append(chEvent, event.GetOi().GetOiOpen())
+		eventName = "oi"
+
+		chEvent = append(chEvent, event.GetOi().OiOpen)
 	} else {
 		chEvent = append(chEvent, nil)
 	}
 
 	if event.GetTrades() != nil {
-		chEvent = append(chEvent, event.GetTrades().GetCount())
+		eventName = "trades"
+
+		chEvent = append(chEvent, event.GetTrades().Count)
 	} else {
 		chEvent = append(chEvent, nil)
 	}
 
 	if event.GetLiquidations() != nil {
+		eventName = "liquidations"
+
 		chEvent = append(chEvent,
-			event.GetLiquidations().GetLiquidationsShortsCount(),
-			event.GetLiquidations().GetLiquidationsLongsCount(),
-			event.GetLiquidations().GetLiquidationsShortsBaseVolume(),
-			event.GetLiquidations().GetLiquidationsLongsBaseVolume(),
-			event.GetLiquidations().GetLiquidationsShortsQuotVolume(),
-			event.GetLiquidations().GetLiquidationsLongsQuotVolume(),
+			event.GetLiquidations().LiquidationsShortsCount,
+			event.GetLiquidations().LiquidationsLongsCount,
+			event.GetLiquidations().LiquidationsShortsBaseVolume,
+			event.GetLiquidations().LiquidationsLongsBaseVolume,
+			event.GetLiquidations().LiquidationsShortsQuotVolume,
+			event.GetLiquidations().LiquidationsLongsQuotVolume,
 		)
 	} else {
 		chEvent = append(chEvent, nil, nil, nil, nil, nil, nil)
 	}
 
 	if event.GetFundingRate() != nil {
+		eventName = "funding_rate"
+
 		chEvent = append(chEvent,
-			event.GetFundingRate().GetFundingRate(),
-			event.GetFundingRate().GetFundingPrice(),
+			event.GetFundingRate().FundingRate,
+			event.GetFundingRate().FundingPrice,
 		)
 	} else {
 		chEvent = append(chEvent, nil, nil)
 	}
 
 	chEvent = append(chEvent, time.Now().UTC().UnixMilli())
+	chEvent = append([]any{eventName}, chEvent...)
 
 	return chEvent
 }

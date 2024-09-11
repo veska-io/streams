@@ -33,7 +33,7 @@ func ExtractPriceEvent(kline local_consumer.Kline) (*eeventspb.ExchangesEvent, e
 	event := &eeventspb.ExchangesEvent{
 		EventTimestamp: kline.KlineTimestamp,
 
-		Exchange: "binance",
+		Exchange: "bybit",
 		Market:   fmt.Sprintf("%s-%s", kline.Base, "usd"),
 		Base:     kline.Base,
 		Quot:     "usd",
@@ -67,7 +67,7 @@ func ExtractVolumeEvent(kline local_consumer.Kline) (*eeventspb.ExchangesEvent, 
 	event := &eeventspb.ExchangesEvent{
 		EventTimestamp: kline.KlineTimestamp,
 
-		Exchange: "binance",
+		Exchange: "bybit",
 		Market:   fmt.Sprintf("%s-%s", kline.Base, "usd"),
 		Base:     kline.Base,
 		Quot:     "usd",

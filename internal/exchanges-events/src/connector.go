@@ -128,10 +128,10 @@ func TransformEvent(event *eeventspb.ExchangesEvent) []any {
 
 	if event.GetPrice() != nil {
 		chEvent = append(chEvent,
-			event.GetPrice().GetPriceOpen(),
-			event.GetPrice().GetPriceClose(),
-			event.GetPrice().GetPriceHigh(),
-			event.GetPrice().GetPriceLow(),
+			event.GetPrice().PriceOpen,
+			event.GetPrice().PriceClose,
+			event.GetPrice().PriceHigh,
+			event.GetPrice().PriceLow,
 		)
 	} else {
 		chEvent = append(chEvent, nil, nil, nil, nil)
@@ -141,12 +141,12 @@ func TransformEvent(event *eeventspb.ExchangesEvent) []any {
 		eventName = "volume"
 
 		chEvent = append(chEvent,
-			event.GetVolume().GetVolumeBase(),
-			event.GetVolume().GetVolumeQuot(),
-			event.GetVolume().GetVolumeBaseBuyTaker(),
-			event.GetVolume().GetVolumeQuotBuyTaker(),
-			event.GetVolume().GetVolumeBaseSellTaker(),
-			event.GetVolume().GetVolumeQuotSellTaker(),
+			event.GetVolume().VolumeBase,
+			event.GetVolume().VolumeQuot,
+			event.GetVolume().VolumeBaseBuyTaker,
+			event.GetVolume().VolumeQuotBuyTaker,
+			event.GetVolume().VolumeBaseSellTaker,
+			event.GetVolume().VolumeQuotSellTaker,
 		)
 	} else {
 		chEvent = append(chEvent, nil, nil, nil, nil, nil, nil)
@@ -155,7 +155,7 @@ func TransformEvent(event *eeventspb.ExchangesEvent) []any {
 	if event.GetOi() != nil {
 		eventName = "oi"
 
-		chEvent = append(chEvent, event.GetOi().GetOiOpen())
+		chEvent = append(chEvent, event.GetOi().OiOpen)
 	} else {
 		chEvent = append(chEvent, nil)
 	}
@@ -163,7 +163,7 @@ func TransformEvent(event *eeventspb.ExchangesEvent) []any {
 	if event.GetTrades() != nil {
 		eventName = "trades"
 
-		chEvent = append(chEvent, event.GetTrades().GetCount())
+		chEvent = append(chEvent, event.GetTrades().Count)
 	} else {
 		chEvent = append(chEvent, nil)
 	}
@@ -172,12 +172,12 @@ func TransformEvent(event *eeventspb.ExchangesEvent) []any {
 		eventName = "liquidations"
 
 		chEvent = append(chEvent,
-			event.GetLiquidations().GetLiquidationsShortsCount(),
-			event.GetLiquidations().GetLiquidationsLongsCount(),
-			event.GetLiquidations().GetLiquidationsShortsBaseVolume(),
-			event.GetLiquidations().GetLiquidationsLongsBaseVolume(),
-			event.GetLiquidations().GetLiquidationsShortsQuotVolume(),
-			event.GetLiquidations().GetLiquidationsLongsQuotVolume(),
+			event.GetLiquidations().LiquidationsShortsCount,
+			event.GetLiquidations().LiquidationsLongsCount,
+			event.GetLiquidations().LiquidationsShortsBaseVolume,
+			event.GetLiquidations().LiquidationsLongsBaseVolume,
+			event.GetLiquidations().LiquidationsShortsQuotVolume,
+			event.GetLiquidations().LiquidationsLongsQuotVolume,
 		)
 	} else {
 		chEvent = append(chEvent, nil, nil, nil, nil, nil, nil)
@@ -187,8 +187,8 @@ func TransformEvent(event *eeventspb.ExchangesEvent) []any {
 		eventName = "funding_rate"
 
 		chEvent = append(chEvent,
-			event.GetFundingRate().GetFundingRate(),
-			event.GetFundingRate().GetFundingPrice(),
+			event.GetFundingRate().FundingRate,
+			event.GetFundingRate().FundingPrice,
 		)
 	} else {
 		chEvent = append(chEvent, nil, nil)

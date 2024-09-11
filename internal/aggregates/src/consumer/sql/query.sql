@@ -70,7 +70,7 @@ clean_dataset as (
 
 	FROM filtered_dataset
 	GROUP BY exchange, market, event, event_timestamp 
-	ORDER BY event_timestamp ASC
+	ORDER BY event_timestamp ASC, updated_timestamp DESC
 )
 
 SELECT

@@ -31,7 +31,7 @@ func ExtractFundingEvent(funding local_consumer.Funding) (*eeventspb.ExchangesEv
 	event := &eeventspb.ExchangesEvent{
 		EventTimestamp: funding.FundingTimestamp,
 
-		Exchange: "binance",
+		Exchange: "bybit",
 		Market:   fmt.Sprintf("%s-%s", funding.Base, "usd"),
 		Base:     funding.Base,
 		Quot:     "usd",
